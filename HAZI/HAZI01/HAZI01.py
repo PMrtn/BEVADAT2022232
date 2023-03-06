@@ -8,9 +8,9 @@
 # %%
 def subset(input_list : list, start_index : int, end_index : int) -> list:
     sublist = []
-    i = start_index - 1
+    i = start_index
 
-    while(i < end_index and i < len(input_list)):
+    while(i <= end_index and i < len(input_list)):
         sublist.append(input_list[i])
         i = i + 1
 
@@ -24,20 +24,21 @@ def subset(input_list : list, start_index : int, end_index : int) -> list:
 
 # %%
 def every_nth(input_list : list, step_size : int) -> list:
-    nthlist = []
-    i = step_size - 1
-
-    while(i < len(input_list)):
-        nthlist.append(input_list[i])
-        i = i + step_size
-    
-    return nthlist
+    return input_list[::step_size]
 
 # %%
 #Create a function that can decide whether a list contains unique values or not
 #return type: bool
 #function name must be: unique
 #input parameters: input_list
+
+# %%
+def unique(input_list : list) -> bool:
+    uniquelist = []
+    for number in input_list:
+        if uniquelist.__contains__(number): return False
+        else: uniquelist.append(number)
+    return True
 
 # %%
 #Create a function that can flatten a nested list ([[..],[..],..])
@@ -64,7 +65,7 @@ def merge_lists(*args) -> list:
 
     for list in args:
         for element in list:
-            if mergedlist.__contains__(element) == False: mergedlist.append(element)
+            mergedlist.append(element)
 
     return mergedlist
 
@@ -87,7 +88,7 @@ def reverse_tuples(input_list : list) -> list:
 #input parameters: input_list
 
 # %%
-def remove_tuplicates(input_list : list) -> list:
+def remove_duplicates(input_list : list) -> list:
     uniquelist = []
 
     [uniquelist.append(x) for x in input_list if x not in uniquelist]
