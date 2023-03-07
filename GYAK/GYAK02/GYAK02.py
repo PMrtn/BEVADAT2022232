@@ -28,7 +28,8 @@ def create_array(size : tuple = (2,2)) -> np.array:
 
 # %%
 def set_one(inputarray : np.array) -> np.array:
-    return np.fill_diagonal(inputarray, 1)
+    np.fill_diagonal(inputarray, 1)
+    return inputarray
 
 # %%
 # Készíts egy függvényt ami transzponálja a paraméterül kapott mártix-ot:
@@ -58,7 +59,7 @@ def round_array(inputarray : np.array, n : int = 2) -> np.array:
 
 # %%
 def bool_array(inputarray: np.array) -> np.array:
-    return np.array(inputarray, dtype=bool)
+    return inputarray.astype(bool)
 
 # %%
 # Készíts egy olyan függvényt, ami a bementként kapott 0 és 1 ből álló tömben a 1 - False-ra az 0 True-ra cserélni
@@ -68,8 +69,7 @@ def bool_array(inputarray: np.array) -> np.array:
 
 # %%
 def invert_bool_array(inputarray: np.array) -> np.array:
-    inputarray != 0
-    return np.array(inputarray, dtype=bool)
+    return ~inputarray.astype(bool)
 
 # %%
 # Készíts egy olyan függvényt ami a paraméterként kapott array-t kilapítja
