@@ -28,7 +28,7 @@ def column_swap(inputarray : np.array) -> np.array:
 
 # %%
 def compare_two_array(inputarray1 : np.array, inputarray2 : np.array) -> np.array:
-    return np.where(np.array(inputarray1) == np.array(inputarray2))[0].tolist()
+    return np.where(inputarray1 == inputarray2)
 
 # %%
 # Készíts egy olyan függvényt, ami vissza adja string-ként a megadott array dimenzióit:
@@ -74,7 +74,7 @@ def decode_Y(inputarray : np.array) -> np.array:
 
 # %%
 def eval_classification(inputlist : list, inputarray : np.array) -> np.array:
-    idx = inputarray.index(max(inputarray))
+    idx = np.argmax(inputarray)
     return inputlist[idx]
 
 # %%
@@ -96,7 +96,8 @@ def replace_odd_numbers(inputarray : np.array) -> np.array:
 # replace_by_value()
 
 # %%
-
+def replace_by_value(inputarray : np.array, num : int) -> np.array:
+    return np.where(inputarray < num, -1, 1)
 
 # %%
 # Készíts egy olyan függvényt, ami egy array értékeit összeszorozza és az eredményt visszaadja
@@ -106,7 +107,8 @@ def replace_odd_numbers(inputarray : np.array) -> np.array:
 # Ha több dimenziós a tömb, akkor az egész tömb elemeinek szorzatával térjen vissza
 
 # %%
-
+def array_multi(inputarray : np.array) -> int:
+    return np.prod(inputarray)
 
 # %%
 # Készíts egy olyan függvényt, ami egy 2D array értékeit összeszorozza és egy olyan array-el tér vissza, aminek az elemei a soroknak a szorzata
@@ -115,7 +117,8 @@ def replace_odd_numbers(inputarray : np.array) -> np.array:
 # array_multi_2d()
 
 # %%
-
+def array_multi_2d(inputarray : np.array) -> np.array:
+    return np.prod(inputarray, axis = 1)
 
 # %%
 # Készíts egy olyan függvényt, amit egy meglévő numpy array-hez készít egy bordert nullásokkal. Bementként egy array-t várjon és kimenetként egy array jelenjen meg aminek van border-je
@@ -125,7 +128,9 @@ def replace_odd_numbers(inputarray : np.array) -> np.array:
 
 
 # %%
-
+def add_border(inputarray : np.array) -> np.array:
+    borderedarray = np.pad(inputarray, pad_width = 1, mode = 'constant', constant_values = 0)
+    return borderedarray
 
 # %%
 # A KÖTVETKEZŐ FELADATOKHOZ NÉZZÉTEK MEG A NUMPY DATA TYPE-JÁT!
@@ -137,15 +142,29 @@ def replace_odd_numbers(inputarray : np.array) -> np.array:
 # list_days()
 
 # %%
+def list_days(start_date: str, end_date: str)-> np.array:
+    alldays = np.arange(start_date, end_date, dtype='datetime64[D]')
+    return alldays
+
+# %%
 # Írj egy fügvényt ami vissza adja az aktuális dátumot az alábbi formában: YYYY-MM-DD. Térjen vissza egy 'numpy.datetime64' típussal.
 # Be:
 # Ki: 2017-03-24
+# get_act_date()
 
+# %%
+def get_act_date() -> np.datetime64:
+    return np.datetime64('today')
 
 # %%
 # Írj egy olyan függvényt ami visszadja, hogy mennyi másodperc telt el 1970 január 01. 00:02:00 óta. Int-el térjen vissza
 # Be: 
 # Ki: másodpercben az idő, int-é kasztolva
 # sec_from_1970()
+
+# %%
+def sec_from_1970() -> int:
+    ellapsedsecs = (np.datetime64('now') - np.datetime64('1970-01-01 00:02:00')).item().total_seconds()
+    return int(ellapsedsecs)
 
 
