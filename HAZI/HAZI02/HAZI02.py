@@ -38,8 +38,8 @@ def compare_two_array(inputarray1 : np.array, inputarray2 : np.array) -> np.arra
 # 3D-vel még műküdnie kell!, 
 
 # %%
-def get_array_shape(inputarray : np.array) -> np.array:
-        shape = np.array(inputarray).shape
+def get_array_shape(inputarray : np.array) -> str:
+        shape = np.shape(inputarray)
 
         if np.any(inputarray) == True:
             return f"sor: {shape[0]}, oszlop: {shape[1]}, melyseg: {1 if np.ndim(inputarray) <= 2 else shape[2]}"
