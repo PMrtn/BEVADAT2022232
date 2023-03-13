@@ -39,8 +39,13 @@ def compare_two_array(inputarray1 : np.array, inputarray2 : np.array) -> np.arra
 
 # %%
 def get_array_shape(inputarray : np.array) -> np.array:
-    shape = np.array(inputarray).shape
-    return f"sor: {shape[0]}, oszlop:{shape[1]}, melyseg:{1 if len(shape) == 2 else shape[0]}"
+        shape = np.array(inputarray).shape
+
+        if np.any(inputarray) == True:
+            return f"sor: {shape[0]}, oszlop: {shape[1]}, melyseg: {1 if np.ndim(inputarray) <= 2 else shape[2]}"
+        
+        else: 
+            return "sor: 0, oszlop: 0, melyseg: 0"
 
 # %%
 # Készíts egy olyan függvényt, aminek segítségével elő tudod állítani egy neurális hálózat tanításához szükséges pred-et egy numpy array-ből. 
