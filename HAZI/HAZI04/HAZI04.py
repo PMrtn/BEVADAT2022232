@@ -37,7 +37,7 @@ függvény neve: capitalize_columns
 
 # %%
 def capitalize_columns(df_data: pd.core.frame.DataFrame) -> pd.core.frame.DataFrame:
-    new_df = df.copy()
+    new_df = df_data.copy()
     
     return new_df.rename(columns=lambda x: x.upper() if 'e' not in x.lower() else x)
 
@@ -54,7 +54,7 @@ függvény neve: math_passed_count
 
 # %%
 def math_passed_count(df_data: pd.core.frame.DataFrame) -> int:
-    new_df = df.copy()
+    new_df = df_data.copy()
     
     passedsum = np.sum(new_df['math score'] >= 50)
     return passedsum
@@ -71,7 +71,7 @@ függvény neve: did_pre_course
 
 # %%
 def did_pre_course(df_data: pd.core.frame.DataFrame) -> pd.core.frame.DataFrame:
-    new_df = df.copy()
+    new_df = df_data.copy()
     
     subset = new_df.loc[new_df['test preparation course'] == 'completed']
     return subset
@@ -89,7 +89,7 @@ függvény neve: average_scores
 
 # %%
 def average_scores(df_data: pd.core.frame.DataFrame) -> pd.core.frame.DataFrame:
-    new_df = df.copy()
+    new_df = df_data.copy()
     
     scores = new_df.groupby('parental level of education')['math score', 'reading score', 'writing score'].mean()
     return scores
@@ -173,12 +173,15 @@ függvény neve: math_bar_plot
 # %%
 def math_bar_plot(df_data: pd.core.frame.DataFrame) -> plt.figure:
     new_df = df_data.copy()
+    fig, ax = plt.subplots()
 
-    fig = plt.figure()
     score = new_df.groupby('gender')['math score'].mean()
 
-    plt.bar(['female', 'male'], score)
- 
+    ax.bar(['female', 'male'], score)
+    ax.set_xlabel("Gender")
+    ax.set_ylabel("Math Score")
+    ax.set_title("Average Math Score by Gender")
+
     return fig
 
 # %%
@@ -199,14 +202,12 @@ függvény neve: writing_hist
 # %%
 def writing_hist(df_data: pd.core.frame.DataFrame) -> plt.figure:
     new_df = df_data.copy()
+    fig, ax = plt.subplots()
 
-    fig = plt.figure()
-
-    plt.hist(new_df['writing score'])
-
-    plt.xlabel('Writing Score')
-    plt.ylabel('Number of Students')
-    plt.title('Distribution of Writing Scores')
+    ax.hist(new_df['writing score'])
+    ax.set_xlabel("Writing Score")
+    ax.set_ylabel("Number of Students")
+    ax.set_title("Distribution of Writing Scores")
 
     return fig
 
@@ -228,13 +229,12 @@ függvény neve: ethnicity_pie_chart
 # %%
 def writing_hist(df_data: pd.core.frame.DataFrame) -> plt.figure:
     new_df = df_data.copy()
+    fig, ax = plt.subplots()
 
-    fig = plt.figure()
     ethnicities = new_df.groupby('race/ethnicity')['gender'].count()
 
-    plt.pie(ethnicities, labels = ['group A', 'group B', 'group C', 'group D', 'group E'], autopct='%1.1f%%')
-
-    plt.title('Proportion of Students by Race/Ethnicity')
+    ax.pie(ethnicities, labels = ['group A', 'group B', 'group C', 'group D', 'group E'], autopct='%1.1f%%')
+    ax.set_title('Proportion of Students by Race/Ethnicity')
 
     return fig
 
