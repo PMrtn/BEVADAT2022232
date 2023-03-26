@@ -200,14 +200,14 @@ függvény neve: writing_hist
 '''
 
 # %%
-def writing_hist(df_data: pd.core.frame.DataFrame) -> plt.figure:
+def writing_hist(df_data):
     new_df = df_data.copy()
+    
     fig, ax = plt.subplots()
-
     ax.hist(new_df['writing score'])
-    ax.set_xlabel("Writing Score")
-    ax.set_ylabel("Number of Students")
-    ax.set_title("Distribution of Writing Scores")
+    ax.set_title('Distribution of Writing Scores')
+    ax.set_xlabel('Writing Score')
+    ax.set_ylabel('Number of Students')
 
     return fig
 
@@ -227,13 +227,12 @@ függvény neve: ethnicity_pie_chart
 '''
 
 # %%
-def writing_hist(df_data: pd.core.frame.DataFrame) -> plt.figure:
+def ethnicity_pie_chart(df_data):
     new_df = df_data.copy()
     fig, ax = plt.subplots()
 
-    ethnicities = new_df.groupby('race/ethnicity')['gender'].count()
-
-    ax.pie(ethnicities, labels = ['group A', 'group B', 'group C', 'group D', 'group E'], autopct='%1.1f%%')
+    grouped = new_df.groupby('race/ethnicity')['gender'].count()
+    ax.pie(grouped, labels=['group A', 'group B', 'group C', 'group D', 'group E'], autopct='%1.1f%%')
     ax.set_title('Proportion of Students by Race/Ethnicity')
 
     return fig
