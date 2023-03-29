@@ -48,7 +48,7 @@ class KNNClassifier:
 
             labels_pred.append(label_pred)
             
-        self.y_preds = labels_pred
+        self.y_preds = np.array(labels_pred, dtype = np.int32)
     
 
     def accuracy(self) -> float:
