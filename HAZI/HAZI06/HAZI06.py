@@ -44,3 +44,91 @@ Ha ezt feladatot hiányzik, akkor nem fogadjuk el a házit!
 ##                                                              ##
 ##################################################################
 """
+
+from src.DecisionTreeClassifier import DecisionTreeClassifier
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
+data = pd.read_csv('HAZI/HAZI06/NJ_60k.csv', skiprows = 1, header = None)
+
+X = data.iloc[:, :-1].values
+Y = data.iloc[:, -1].values.reshape(-1, 1)
+
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.2, random_state = 41)
+
+classifier = DecisionTreeClassifier(100, 11)
+classifier.fit(X_train, Y_train)
+
+Y_pred = classifier.predict(X_test)
+acc = accuracy_score(Y_test, Y_pred)
+
+print(f"Min_split = 100 \t Max_depth = 11 \t Accuracy = {acc}")
+
+
+
+# Bruteforce módszerrel kezdtem neki a tanításnak 10-es min_split-tel. Viszonylag erős gépen is, a max_depth növelésével nagyban nőtt a kiértékelés időtartama. For ciklusokkal több variáción végigmentem.
+# Megfigyeltem, hogy -esetekben- nagyban eltérő Min_split értékek mellett (10, 11, 20, 30) azonos max_depth-nél 0.2%-on belüli maximum eltérés tapasztalható, illetve max_depth = 9-nél előző min_split értékekkel error-t kapok.
+# Max_depth = 8 esetén maximum 79,55%-os pontosságot kaptam, illetve ennek növelésével a pontosság javulása is jól megfigyelhető, így arra jutottam, hogy el kell érnem, hogy ne kapjak errort a magasabb értékekre.
+# Szignifikáns!! min_split növelése esetén (min_split = 100) már nem kaptam errort max_depth >= 9 értékekre, így rájöttem, hogy a 2 érték exponenciális összefüggésben van.
+# Érdekesség, hogy max_depth = 11 tűnik a holtpontnak magas min_split-tel, eddig nő, ennél nagyobb értékkel pedig csökken a pontosság.
+# Min_split = 100, max_depth = 10 kombinációval sikerült először 80% fölötti pontosságot elérni.
+# Min_split = 300 értéknél már 80%-ot sem kaptam, így 80.358% pontosság lett a nyerő, Min_split = 100  Max_depth = 11 értékpárral.
+
+# Min_split = 10   Max_depth = 1   Accuracy = 0.7773333333333333
+# Min_split = 10   Max_depth = 3   Accuracy = 0.7839166666666667
+# Min_split = 10   Max_depth = 4   Accuracy = 0.7849166666666667
+# Min_split = 10   Max_depth = 5   Accuracy = 0.7885833333333333
+# Min_split = 10   Max_depth = 6   Accuracy = 0.7885
+# Min_split = 10   Max_depth = 7   Accuracy = 0.7935
+# Min_split = 10   Max_depth = 8   Accuracy = 0.7955833333333333
+# Min_split = 10   Max_depth = 9   Accuracy = ERROR!!!
+
+# Min_split = 11   Max_depth = 1   Accuracy = 0.7773333333333333
+# Min_split = 11   Max_depth = 2   Accuracy = 0.7823333333333333
+# Min_split = 11   Max_depth = 3   Accuracy = 0.7839166666666667
+# Min_split = 11   Max_depth = 4   Accuracy = 0.7849166666666667
+# Min_split = 11   Max_depth = 5   Accuracy = 0.7885833333333333
+# Min_split = 11   Max_depth = 6   Accuracy = 0.7885
+# Min_split = 11   Max_depth = 7   Accuracy = 0.7935
+# Min_split = 11   Max_depth = 8   Accuracy = 0.7955833333333333
+# Min_split = 11   Max_depth = 9   Accuracy = ERROR!!!
+
+# Min_split = 20   Max_depth = 1   Accuracy = 0.7773333333333333
+# Min_split = 20   Max_depth = 2   Accuracy = 0.7823333333333333
+# Min_split = 20   Max_depth = 3   Accuracy = 0.7839166666666667
+# Min_split = 20   Max_depth = 4   Accuracy = 0.7849166666666667
+# Min_split = 20   Max_depth = 5   Accuracy = 0.7885833333333333
+# Min_split = 20   Max_depth = 6   Accuracy = 0.7885
+# Min_split = 20   Max_depth = 7   Accuracy = 0.7936666666666666
+# Min_split = 20   Max_depth = 8   Accuracy = 0.7955
+
+# Min_split = 30   Max_depth = 1   Accuracy = 0.7773333333333333
+# Min_split = 30   Max_depth = 2   Accuracy = 0.7823333333333333
+# Min_split = 30   Max_depth = 3   Accuracy = 0.7839166666666667
+# Min_split = 30   Max_depth = 4   Accuracy = 0.7849166666666667
+# Min_split = 30   Max_depth = 5   Accuracy = 0.7885833333333333
+# Min_split = 30   Max_depth = 6   Accuracy = 0.7885
+# Min_split = 30   Max_depth = 7   Accuracy = 0.7936666666666666
+# Min_split = 30   Max_depth = 8   Accuracy = 0.7955
+
+# Min_split = 100  Max_depth = 7   Accuracy = 0.7940833333333334
+# Min_split = 100  Max_depth = 8   Accuracy = 0.7969166666666667
+# Min_split = 100  Max_depth = 9   Accuracy = 0.7986666666666666
+# Min_split = 100  Max_depth = 10  Accuracy = 0.80225
+# Min_split = 100  Max_depth = 11  Accuracy = 0.8035833333333333
+# Min_split = 100  Max_depth = 12  Accuracy = 0.8025
+# Min_split = 100  Max_depth = 13  Accuracy = 0.8009166666666667
+# Min_split = 100  Max_depth = 14  Accuracy = 0.8005
+
+# Min_split = 110  Max_depth = 7   Accuracy = 0.7935833333333333
+# Min_split = 110  Max_depth = 8   Accuracy = 0.7964166666666667
+# Min_split = 110  Max_depth = 9   Accuracy = 0.79825
+# Min_split = 110  Max_depth = 10  Accuracy = 0.8014166666666667
+# Min_split = 110  Max_depth = 11  Accuracy = 0.80275
+# Min_split = 110  Max_depth = 12  Accuracy = 0.8016666666666666
+
+# Min_split = 300  Max_depth = 10  Accuracy = 0.7985
+# Min_split = 300  Max_depth = 11  Accuracy = 0.7995833333333333
+# Min_split = 300  Max_depth = 12  Accuracy = 0.7996666666666666
+# Min_split = 300  Max_depth = 13  Accuracy = 0.798
