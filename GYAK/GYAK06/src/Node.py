@@ -5,8 +5,7 @@ class Node():
         self.value = value
 
         self.feature_index = feature_index
-        self.treshold = threshold
+        self.threshold = threshold
         self.left = left
         self.right = right
         self.info_gain = info_gain
-
