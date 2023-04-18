@@ -1,8 +1,4 @@
-import pandas as pd
 import numpy as np
-from sklearn.datasets import load_iris
-from sklearn.model_selection import train_test_split
-
 
 class LinearRegression:
     def __init__(self, epochs: int = 1000, lr: float = 1e-3):
