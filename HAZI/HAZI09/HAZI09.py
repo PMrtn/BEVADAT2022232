@@ -9,7 +9,7 @@ class KMeansOnDigits:
         self.n_clusters = n_clusters
         self.random_state = random_state
 
-    def load_database(self):
+    def load_dataset(self):
         self.digits = load_digits()
 
     def predict(self):
